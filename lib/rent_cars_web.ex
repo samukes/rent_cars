@@ -42,6 +42,8 @@ defmodule RentCarsWeb do
         formats: [:html, :json],
         layouts: [html: RentCarsWeb.Layouts]
 
+      alias RentCarsWeb.Router.Helpers, as: Routes
+
       import Plug.Conn
       import RentCarsWeb.Gettext
 
