@@ -5,7 +5,7 @@ defmodule RentCarsWeb.Api.CategoryControllerTest do
 
   describe "GET index" do
     test "should list all categories", %{conn: conn} do
-      result = get(conn, "/api/categories")
+      result = get(conn, ~p"/api/categories")
 
       assert json_response(result, 200)["data"] == [
                %{
