@@ -3,8 +3,10 @@ defmodule RentCarsWeb.Api.CategoryController do
 
   use RentCarsWeb, :controller
 
+  alias RentCars.Categories
+
   def index(conn, _params) do
-    categories = [%{description: "pumpkin 1223", id: "123123", name: "SPOT"}]
+    categories = Categories.list_categories()
 
     conn
     |> put_status(200)
