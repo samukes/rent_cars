@@ -20,19 +20,23 @@ jobs:
         with:
           path: deps
           key: ${{ runner.os }}-${{ matrix.otp }}-${{ matrix.elixir }}-${{ hashFiles(format('{0}-{1}', github.workspace, '/mix.lock')) }}
+
       - name: Install Mix Dependencies
         if: steps.mix-dialyzer-cache.outputs.cache-hit != 'true'
         run: mix deps.get
+
       - name: Retrieve PLT Cache
         uses: actions/cache@v1
         id: plt-cache
         with:
           path: priv/plts
           key: ${{ runner.os }}-${{ matrix.otp }}-${{ matrix.elixir }}-plts-${{ hashFiles(format('{0}{1}', github.workspace, '/mix.lock')) }}
+
       - name: Create PLTs
-        if: steps.plt-cache.outputs.cache-hit != 'true'
+        if: steps.plt-cache.outputs.cache-hit != 'true' || github.run_attempt != '1'
         run: |
           mkdir -p priv/plts
           mix dialyzer --plt
+
       - name: Run dialyzer
         run: mix dialyzer --format github
