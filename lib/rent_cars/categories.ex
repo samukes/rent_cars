@@ -7,4 +7,10 @@ defmodule RentCars.Categories do
   def list_categories do
     Repo.all(Category)
   end
+
+  def create_category(params) do
+    params
+    |> Category.changeset()
+    |> Repo.insert()
+  end
 end
