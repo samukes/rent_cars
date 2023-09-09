@@ -12,15 +12,6 @@ defmodule RentCarsWeb.ErrorJSON do
 
   use RentCarsWeb, :html
 
-  def render("422.json" = template, %{changeset: changeset}) do
-    %{
-      errors: %{
-        reason: Ecto.Changeset.traverse_errors(changeset, &translate_error/1),
-        detail: Phoenix.Controller.status_message_from_template(template)
-      }
-    }
-  end
-
   def render(template, _assigns) do
     %{errors: %{detail: Phoenix.Controller.status_message_from_template(template)}}
   end

@@ -23,11 +23,8 @@ defmodule RentCarsWeb.Router do
   scope "/api", RentCarsWeb, as: :api do
     pipe_through(:api)
 
-    get("/categories", Api.CategoryController, :index)
-    get("/categories/:id", Api.CategoryController, :show)
-    post("/categories", Api.CategoryController, :create)
-    put("/categories/:id", Api.CategoryController, :update)
-    delete("/categories/:id", Api.CategoryController, :delete)
+    resources "/categories", Api.CategoryController
+    resources "/specifications", Api.SpecificationController
   end
 
   # Other scopes may use custom stacks.
