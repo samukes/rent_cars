@@ -57,12 +57,7 @@ defmodule RentCarsWeb.Api.CategoryControllerTest do
 
       result = post(conn, ~p"/api/categories", category: params)
 
-      assert %{
-               "errors" => %{
-                 "detail" => "Unprocessable Entity",
-                 "reason" => %{"description" => ["can't be blank"]}
-               }
-             } = json_response(result, 422)
+      assert %{"errors" => %{"description" => ["can't be blank"]}} = json_response(result, 422)
     end
   end
 
