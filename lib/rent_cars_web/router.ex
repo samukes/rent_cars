@@ -26,6 +26,8 @@ defmodule RentCarsWeb.Router do
     get("/categories", Api.CategoryController, :index)
     get("/categories/:id", Api.CategoryController, :show)
     post("/categories", Api.CategoryController, :create)
+    put("/categories/:id", Api.CategoryController, :update)
+    delete("/categories/:id", Api.CategoryController, :delete)
   end
 
   # Other scopes may use custom stacks.

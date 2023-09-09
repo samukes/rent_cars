@@ -3,23 +3,34 @@ defmodule RentCarsWeb.Api.CategoryControllerTest do
 
   use RentCarsWeb.ConnCase
 
+  alias RentCars.Categories.Category
+  alias RentCars.CategoriesFixtures
+
   describe "GET index" do
     test "should list all categories", %{conn: conn} do
+      CategoriesFixtures.category_fixture(%{name: "Car 123", description: "123"})
+      CategoriesFixtures.category_fixture(%{name: "Car 456", description: "456"})
+
       result = get(conn, ~p"/api/categories")
 
-      assert json_response(result, 200)["data"] == []
+      assert [
+               %{
+                 "description" => "456",
+                 "id" => _,
+                 "name" => "CAR 456"
+               },
+               %{
+                 "description" => "123",
+                 "id" => _,
+                 "name" => "CAR 123"
+               }
+             ] = json_response(result, 200)["data"]
     end
   end
 
   describe "GET show" do
     test "should retrieve a category by id", %{conn: conn} do
-      params = %{name: "Sport", description: "A sport for you"}
-
-      %{"id" => id} =
-        conn
-        |> post(~p"/api/categories", category: params)
-        |> json_response(201)
-        |> Access.get("data")
+      %Category{id: id} = CategoriesFixtures.category_fixture()
 
       result = get(conn, ~p"/api/categories/#{id}")
 
@@ -52,6 +63,33 @@ defmodule RentCarsWeb.Api.CategoryControllerTest do
                  "reason" => %{"description" => ["can't be blank"]}
                }
              } = json_response(result, 422)
+    end
+  end
+
+  describe "PUT update" do
+    test "should update a given category", %{conn: conn} do
+      category = CategoriesFixtures.category_fixture()
+
+      new_name = "Hatch"
+
+      refute new_name == category.name
+
+      result = put(conn, ~p"/api/categories/#{category.id}", category: %{name: new_name})
+
+      new_name = String.upcase(new_name)
+
+      assert %{"id" => _, "name" => ^new_name, "description" => _} =
+               json_response(result, 200)["data"]
+    end
+  end
+
+  describe "DELETE delete" do
+    test "should update a given category", %{conn: conn} do
+      category = CategoriesFixtures.category_fixture()
+
+      result = delete(conn, ~p"/api/categories/#{category.id}")
+
+      assert response(result, 204)
     end
   end
 end

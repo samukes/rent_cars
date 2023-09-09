@@ -30,4 +30,20 @@ defmodule RentCarsWeb.Api.CategoryController do
     |> put_status(:ok)
     |> render("show.json", %{category: category})
   end
+
+  def update(conn, %{"id" => id, "category" => params}) do
+    with category <- Categories.get_category(id),
+         {:ok, category} <- Categories.update_category(category, params) do
+      conn
+      |> put_status(:ok)
+      |> render("show.json", %{category: category})
+    end
+  end
+
+  def delete(conn, %{"id" => id}) do
+    with category <- Categories.get_category(id),
+         {:ok, _} <- Categories.delete_category(category) do
+      send_resp(conn, :no_content, "")
+    end
+  end
 end
