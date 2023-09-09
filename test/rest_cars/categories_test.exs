@@ -6,9 +6,29 @@ defmodule RentCarsWeb.Api.CategoriesTest do
   alias RentCars.Categories
   alias RentCars.Categories.Category
 
+  alias RentCars.CategoriesFixtures
+
   describe "list_categories/0" do
     test "should return all categories" do
-      assert Categories.list_categories() == []
+      CategoriesFixtures.category_fixture(%{name: "Car 123", description: "123"})
+      CategoriesFixtures.category_fixture(%{name: "Car 456", description: "456"})
+
+      assert [
+               %RentCars.Categories.Category{
+                 id: _,
+                 name: "CAR 123",
+                 description: "123",
+                 inserted_at: _,
+                 updated_at: _
+               },
+               %RentCars.Categories.Category{
+                 id: _,
+                 name: "CAR 456",
+                 description: "456",
+                 inserted_at: _,
+                 updated_at: _
+               }
+             ] = Categories.list_categories()
     end
   end
 
@@ -42,9 +62,7 @@ defmodule RentCarsWeb.Api.CategoriesTest do
 
   describe "get_category/1" do
     test "should return one category by id" do
-      attrs = %{description: "pumpkin 123", name: "sport"}
-
-      {:ok, %Category{id: category_id}} = Categories.create_category(attrs)
+      %Category{id: category_id} = CategoriesFixtures.category_fixture()
 
       assert %Category{id: ^category_id} = Categories.get_category(category_id)
     end
@@ -52,9 +70,7 @@ defmodule RentCarsWeb.Api.CategoriesTest do
 
   describe "update_category/1" do
     test "should update one category by id" do
-      attrs = %{description: "pumpkin 123", name: "sport"}
-
-      {:ok, %Category{id: category_id} = category} = Categories.create_category(attrs)
+      %Category{id: category_id} = category = CategoriesFixtures.category_fixture()
 
       new_name = "SUV"
 
@@ -65,9 +81,7 @@ defmodule RentCarsWeb.Api.CategoriesTest do
 
   describe "delete_category/1" do
     test "should delete one category by id" do
-      attrs = %{description: "pumpkin 123", name: "sport"}
-
-      {:ok, category} = Categories.create_category(attrs)
+      category = CategoriesFixtures.category_fixture()
 
       assert {:ok, _} = Categories.delete_category(category)
 
