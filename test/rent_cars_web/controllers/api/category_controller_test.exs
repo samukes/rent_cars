@@ -3,8 +3,8 @@ defmodule RentCarsWeb.Api.CategoryControllerTest do
 
   use RentCarsWeb.ConnCase
 
-  alias RentCars.CategoriesFixtures
   alias RentCars.Categories.Category
+  alias RentCars.CategoriesFixtures
 
   describe "GET index" do
     test "should list all categories", %{conn: conn} do
