@@ -16,7 +16,11 @@ defmodule RentCars.Categories.Category do
   end
 
   def changeset(params) do
-    %__MODULE__{}
+    changeset(%__MODULE__{}, params)
+  end
+
+  def changeset(category, params) do
+    category
     |> cast(params, @fields)
     |> validate_required(@fields)
     |> unique_constraint(:name, name: "categories_name_index")

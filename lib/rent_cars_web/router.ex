@@ -24,6 +24,8 @@ defmodule RentCarsWeb.Router do
     pipe_through(:api)
 
     get("/categories", Api.CategoryController, :index)
+    get("/categories/:id", Api.CategoryController, :show)
+    post("/categories", Api.CategoryController, :create)
   end
 
   # Other scopes may use custom stacks.
