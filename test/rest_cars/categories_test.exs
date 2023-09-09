@@ -39,4 +39,14 @@ defmodule RentCarsWeb.Api.CategoriesTest do
       assert %{description: ["can't be blank"]} = errors_on(changeset)
     end
   end
+
+  describe "get_category/1" do
+    test "should return one category by id" do
+      attrs = %{description: "pumpkin 123", name: "sport"}
+
+      {:ok, %Category{id: category_id}} = Categories.create_category(attrs)
+
+      assert %Category{id: ^category_id} = Categories.get_category(category_id)
+    end
+  end
 end
