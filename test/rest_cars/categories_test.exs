@@ -49,4 +49,29 @@ defmodule RentCarsWeb.Api.CategoriesTest do
       assert %Category{id: ^category_id} = Categories.get_category(category_id)
     end
   end
+
+  describe "update_category/1" do
+    test "should update one category by id" do
+      attrs = %{description: "pumpkin 123", name: "sport"}
+
+      {:ok, %Category{id: category_id} = category} = Categories.create_category(attrs)
+
+      new_name = "SUV"
+
+      assert {:ok, %Category{id: ^category_id, name: ^new_name}} =
+               Categories.update_category(category, %{name: new_name})
+    end
+  end
+
+  describe "delete_category/1" do
+    test "should delete one category by id" do
+      attrs = %{description: "pumpkin 123", name: "sport"}
+
+      {:ok, category} = Categories.create_category(attrs)
+
+      assert {:ok, _} = Categories.delete_category(category)
+
+      assert nil == Categories.get_category(category.id)
+    end
+  end
 end
