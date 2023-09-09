@@ -5,6 +5,10 @@ defmodule RentCarsWeb.Api.CategoryJSON do
     %{data: many_category(categories)}
   end
 
+  def render("show.json", %{category: _} = elem) do
+    %{data: render("category.json", elem)}
+  end
+
   def render("category.json", %{category: category}) do
     %{id: category.id, description: category.description, name: category.name}
   end
