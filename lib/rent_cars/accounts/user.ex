@@ -28,5 +28,10 @@ defmodule RentCars.Accounts.User do
     %__MODULE__{}
     |> cast(attrs, @fields ++ @required_fields)
     |> validate_required(@required_fields)
+    |> validate_format(:email, ~r/@/)
+    |> update_change(:email, &String.downcase/1)
+    |> validate_length(:password, min: 6, max: 100)
+    |> validate_confirmation(:password)
+    |> unique_constraint([:driver_license, :email, :user_name])
   end
 end
