@@ -75,7 +75,8 @@ defmodule RentCars.MixProject do
       {:excoveralls, "~> 0.16.1", only: :test},
       {:sobelow, "~> 0.12.2", only: [:dev, :test], runtime: false},
       {:dialyxir, "~> 1.3", only: [:dev], runtime: false},
-      {:mix_test_watch, "~> 1.0", only: [:dev, :test], runtime: false}
+      {:mix_test_watch, "~> 1.0", only: [:dev, :test], runtime: false},
+      {:argon2_elixir, "~> 4.0"}
     ]
   end
 

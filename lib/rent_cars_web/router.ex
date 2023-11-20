@@ -23,6 +23,7 @@ defmodule RentCarsWeb.Router do
   scope "/api", RentCarsWeb, as: :api do
     pipe_through(:api)
 
+    resources "/accounts", Api.AccountController
     resources "/categories", Api.CategoryController
     resources "/specifications", Api.SpecificationController
   end

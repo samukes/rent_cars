@@ -39,7 +39,7 @@ defmodule RentCarsWeb.Api.CategoryControllerTest do
   end
 
   describe "POST create" do
-    test "should list all categories", %{conn: conn} do
+    test "should create a category", %{conn: conn} do
       name = "Sport"
       description = "A sport for you"
       params = %{name: name, description: description}
