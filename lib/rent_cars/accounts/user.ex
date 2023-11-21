@@ -33,5 +33,12 @@ defmodule RentCars.Accounts.User do
     |> validate_length(:password, min: 6, max: 100)
     |> validate_confirmation(:password)
     |> unique_constraint([:driver_license, :email, :user_name])
+    |> hash_password()
   end
+
+  def hash_password(%{valid?: true, changes: %{password: password}} = changeset) do
+    change(changeset, %{password_hash: Argon2.hash_pwd_salt(password)})
+  end
+
+  def hash_password(changeset), do: changeset
 end
